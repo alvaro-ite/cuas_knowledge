@@ -2,6 +2,7 @@
 
 Format: `YYYY-MM-DD – topic – decision/status – source`
 
+- 2026-11-26 – ADS-B SAPIENT node – implemented inside the Pi's main.py (folder `sapient/`, off by default), same records as MQTT; node_id `c6992234-fd97-4959-95c3-fd06f68be85a`; harness acceptance test pending. – Raspberry_FlightRadar sapient/.
 - 2026-11-26 – Knowledge repo name – folder and GitHub repo are `cuas_knowledge` (underscore); an import of `../cuas-knowledge/README.md` loads nothing → use the underscore path in each repo's CLAUDE.md.
 - 2026-11-26 – Sensor node guide – new `sapient-sensor-node.md`: ports, session, harness validation rules, acceptance test for our own sensor nodes. – harness code + captures.
 - 2026-11-26 – ADS-B harness target – ASM2 slot prepared: SDA :14006 without database, tap :14101 (`Start ADSB DataAgent.bat`, `Start Tap ADS-B.bat`). – test PC.

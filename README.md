@@ -32,6 +32,6 @@ Each code repo stays independent; only knowledge lives here.
 - Scout → MQTT and HTTP: working, continuous detections.
 - Scout → SAPIENT: works end to end through the Dstl harness; DetectionReports only while the drone moves → static drones are not reported. Confirmation pending (`sensors/scout.md`).
 - Own SAPIENT fusion-node server: being built on the PC agent.
-- ADS-B SAPIENT node on the Pi: starting; harness target ready on TCP :14101 (`sensors/adsb.md`, `sapient-sensor-node.md`).
+- ADS-B SAPIENT node on the Pi: implemented (off by default), harness test on TCP :14101 pending (`sensors/adsb.md`).
 - Dstl Test Harness: installed and working without PostgreSQL, with a logging tap per sensor (`test-harness.md`).
 - c2lynx SAPIENT support: not yet.
