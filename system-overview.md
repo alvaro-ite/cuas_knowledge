@@ -20,6 +20,7 @@
 | topic | publisher | source |
 |---|---|---|
 | `cuas/devices/DronetagScout/data` | Scout | [verified: capture Antena2.json] |
+| `cuas/devices/D189C831D0375A719A/data` | Scout (serial in topic) | [verified: MQTT log 2026-11-26] — topic changed or configurable |
 | `c2lynx/adsb/v1/pi5-adsb-01/aircraft` | ADS-B service | [verified: received-2026-11-10.jsonl] |
 | `c2lynx/adsb/v1/pi5-adsb-01/health` | ADS-B service | [verified: health-2026-11-10.jsonl] |
 | `cuas/espacio-aereo`, `cuas/espacio-aereo_health` | ADS-B service (same source_id) | [verified: same captures] — second namespace, origin unexplained |
@@ -28,3 +29,4 @@
 ## SAPIENT connections (target)
 - Each sensor is its own SAPIENT node with its own connection (decision: option A, see `sapient.md`).
 - Ports: Scout-facing SAPIENT server port proposed **14001** (same as harness SDA default) so the Scout config only changes IP. c2lynx port: TBD.
+- Today (harness on the test PC, LAN IP via DHCP): Scout → :14100, ADS-B node → :14101; details in `test-harness.md` [verified: 2026-11-26].

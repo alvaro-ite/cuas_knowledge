@@ -15,9 +15,22 @@ restart or reconfigure it; it consumes its output read-only.
 
 ## Plan: ADS-B as a SAPIENT sensor node (draft, not decided)
 - Input: the existing MQTT aircraft feed (read-only).
-- Output: own SAPIENT node (own stable node_id) connecting as client to the fusion node (harness SDA now, c2lynx later).
-- Mapping draft [inferred]: ICAO → `id`; stable ULID per ICAO → `object_id`; position → Location with datum
-  (geometric altitude → WGS84_E; barometric → object_info); NACp/NIC → location errors; callsign, squawk, RSSI,
-  on_ground, emergency → object_info declared in Registration; classification from the §7.2 taxonomy (read the standard).
-- Mode S messages without position: decide whether to report (range-less) or skip — open.
+- Output: own SAPIENT node (own stable node_id) connecting as client to the fusion node (harness now, c2lynx later).
+- Harness target ready on the test PC: TCP :14101 (tap) → SDA :14006 (ASM2 slot, no database) [verified: set up 2026-11-26].
+  How to connect, session, validation rules and acceptance test: `../sapient-sensor-node.md`.
+- Node definition: NODE_TYPE_PASSIVE_RF, node_sub_type "ADS-B" (the Scout uses PASSIVE_RF / "RemoteID") [inferred choice].
+- Mapping draft [inferred unless tagged]:
+  - address (ICAO) → `id`; stable ULID per ICAO → `object_id`.
+  - latitude/longitude → Location y/x (x = longitude), LAT_LNG_DEG_M.
+  - altitude_geom_m → z with datum WGS84_E (ADS-B geometric altitude is ellipsoidal); altitude_baro_m → object_info.
+  - ground_speed_kmh / 3.6 and track_deg → ENU east = v·sin(track), north = v·cos(track); vertical_rate_ms → up_rate.
+    The harness rejects an east/north rate of exactly 0.0 → omit the velocity when stationary [verified: ENUVelocityValidator.cs].
+  - NACp/NIC → location errors; callsign, squawk, rssi_dbfs, on_ground, emergency, nic, nac_p, sil, source_type → object_info,
+    each declared in the Registration (detection_report definitions, category OBJECT).
+  - classification `Air Vehicle`, sub-class `Manned Fixed Wing` / `Manned Rotary Wing` when the emitter category allows it
+    (harness taxonomy names, see `../sapient-sensor-node.md`); detection_confidence < 1.0 (spoofable).
+- Mode S messages without position cannot become a valid DetectionReport: location or range_bearing is mandatory
+  [verified: DetectionReportValidator.cs] → skip them (or a later decision on a range-less report).
+- Report every new position of every aircraft, including aircraft on the ground or hovering (lesson from the Scout).
+- When an aircraft stops being received, optionally send a last report with `state` "lost" [inferred: proto comment].
 - Validate against the Dstl harness before c2lynx.

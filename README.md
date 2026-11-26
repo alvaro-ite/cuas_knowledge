@@ -13,6 +13,7 @@ Each code repo stays independent; only knowledge lives here.
 | `system-overview.md` | components, roles, network, topics, ports, who talks to whom |
 | `sapient.md` | SAPIENT (BSI Flex 335 v2.0) facts we verified, server and sensor behaviour contract, open questions |
 | `test-harness.md` | Dstl Test Harness v5.2.4: constraints, TCP topology, how we use it |
+| `sapient-sensor-node.md` | building a sensor node that connects to our harness: ports, session, validation rules, acceptance test |
 | `sensors/scout.md` | Dronetag Scout: outputs, observed data, SAPIENT drop issue |
 | `sensors/adsb.md` | existing ADS-B service on the Pi, observed data, plan for its SAPIENT node |
 | `decisions.md` | dated decision and status log (newest first) |
@@ -29,8 +30,8 @@ Each code repo stays independent; only knowledge lives here.
 
 ## Current status (2026-11-26)
 - Scout → MQTT and HTTP: working, continuous detections.
-- Scout → SAPIENT: Registration/StatusReports arrive, but the Scout's own SAPIENT drop counter keeps rising. Under investigation (`sensors/scout.md`).
+- Scout → SAPIENT: works end to end through the Dstl harness; DetectionReports only while the drone moves → static drones are not reported. Confirmation pending (`sensors/scout.md`).
 - Own SAPIENT fusion-node server: being built on the PC agent.
-- ADS-B SAPIENT node on the Pi: starting (`sensors/adsb.md`).
-- Dstl Test Harness: installed and working.
+- ADS-B SAPIENT node on the Pi: starting; harness target ready on TCP :14101 (`sensors/adsb.md`, `sapient-sensor-node.md`).
+- Dstl Test Harness: installed and working without PostgreSQL, with a logging tap per sensor (`test-harness.md`).
 - c2lynx SAPIENT support: not yet.
